@@ -1,67 +1,65 @@
-import React from 'react';
+import React, { useState, FormEvent } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import logoImg from '../../assets/logo.svg';
 import { Title, Form, Repositories } from './styles';
+import api from '../../services/api';
+
+interface Repository {
+  full_name: string;
+  description: string;
+  owner: {
+    login: string;
+    avatar_url: string;
+  };
+}
 
 const Dashboard: React.FC = () => {
+  const [newRepository, setNewRepository] = useState('');
+  const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  // FormEvent é para não ter o reload na págna
+  async function handleAddRepository(
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> {
+    event.preventDefault();
+
+    const response = await api.get<Repository>(`repos/${newRepository}`);
+
+    const repository = response.data;
+
+    setRepositories([...repositories, repository]);
+    setNewRepository('');
+  }
+
   return (
     <>
       <img src={logoImg} alt="Github Explorer" />
       <Title>Explore repositórios no GitHub</Title>
 
-      <Form>
-        <input type="text" placeholder="Digite o nome do repositório" />
+      <Form onSubmit={handleAddRepository}>
+        <input
+          placeholder="Digite o nome do repositório"
+          value={newRepository}
+          onChange={event => setNewRepository(event.target.value)}
+        />
         <button type="submit">Pesquisar</button>
       </Form>
 
       <Repositories>
-        <a href="teste">
-          <img
-            src="https://avatars.githubusercontent.com/u/18095161?s=460&u=afaad6043224735425d5501f9815aafb9e930db4&v=4"
-            alt="Ruth Maria"
-          />
+        {repositories.map(repository => (
+          <a key={repository.full_name} href="teste">
+            <img
+              src={repository.owner.avatar_url}
+              alt={repository.owner.login}
+            />
 
-          <div>
-            <strong>RuthMaria/bootcamp-GoStack</strong>
-            <p>
-              Repository with all the challenges developed during Rocketseats
-              GoStack bootcamp.
-            </p>
-          </div>
-          <FiChevronRight size={20} />
-        </a>
-
-        <a href="teste">
-          <img
-            src="https://avatars.githubusercontent.com/u/18095161?s=460&u=afaad6043224735425d5501f9815aafb9e930db4&v=4"
-            alt="Ruth Maria"
-          />
-
-          <div>
-            <strong>RuthMaria/bootcamp-GoStack</strong>
-            <p>
-              Repository with all the challenges developed during Rocketseats
-              GoStack bootcamp.
-            </p>
-          </div>
-          <FiChevronRight size={20} />
-        </a>
-
-        <a href="teste">
-          <img
-            src="https://avatars.githubusercontent.com/u/18095161?s=460&u=afaad6043224735425d5501f9815aafb9e930db4&v=4"
-            alt="Ruth Maria"
-          />
-
-          <div>
-            <strong>RuthMaria/bootcamp-GoStack</strong>
-            <p>
-              Repository with all the challenges developed during Rocketseats
-              GoStack bootcamp.
-            </p>
-          </div>
-          <FiChevronRight size={20} />
-        </a>
+            <div>
+              <strong>{repository.full_name}</strong>
+              <p>{repository.description}</p>
+            </div>
+            <FiChevronRight size={20} />
+          </a>
+        ))}
       </Repositories>
     </>
   );
