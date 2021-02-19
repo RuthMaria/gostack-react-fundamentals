@@ -40,8 +40,63 @@ export const Form = styled.form`
     font-weight: bold;
     transition: background-color 0.2s;
 
+    // equivale ao button:hover
     &:hover {
       background-color: ${shade(0.2, '#04d361')};
+    }
+  }
+`;
+
+export const Repositories = styled.div`
+  margin-top: 80px;
+  max-width: 700px;
+
+  a {
+    background: #ffffff;
+    border-radius: 5px;
+    width: 100%;
+    padding: 24px;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: translateX(10px);
+    }
+
+    // equivalente ao 'a + a', aplicado a partir do segundo 'a'
+    & + a {
+      margin-top: 16px;
+    }
+
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+    }
+
+    div {
+      margin-left: 16px;
+
+      strong {
+        font-size: 20px;
+        color: #3d3d4d;
+      }
+
+      p {
+        font-size: 18px;
+        color: #a8a8b3;
+        margin-top: 4px;
+      }
+    }
+
+    // os icones sempre são em svg
+    svg {
+      margin-left: auto;
+      color: #cbcbd6;
     }
   }
 `;
