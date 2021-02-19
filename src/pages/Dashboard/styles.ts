@@ -1,5 +1,9 @@
-import styled from 'styled-components';
-import { shade } from 'polished';
+import styled, { css } from 'styled-components';
+import { shade } from 'polished'; // usado para escurecer uma cor
+
+interface FormPropos {
+  hasError: boolean;
+}
 
 export const Title = styled.h1`
   font-size: 48px;
@@ -10,7 +14,8 @@ export const Title = styled.h1`
   margin-top: 80px;
 `;
 
-export const Form = styled.form`
+// recebe uma propriedade do componente
+export const Form = styled.form<FormPropos>`
   margin-top: 40px;
   max-width: 700px;
 
@@ -20,10 +25,16 @@ export const Form = styled.form`
     flex: 1; // ocupa todo o espaço disponível
     height: 70px;
     border-radius: 5px 0 0 5px;
-    border: 0;
     padding: 0 24px;
     color: #3a3a3a;
+    border: 2px solid #fff;
+    border-right: 0;
 
+    ${props =>
+      props.hasError &&
+      css`
+        border-color: #c53030;
+      `}
     // o '&' referencia o próprio elemento, equivale ao input::placeholder
     &::placeholder {
       color: #a8a8b3;
@@ -45,6 +56,12 @@ export const Form = styled.form`
       background-color: ${shade(0.2, '#04d361')};
     }
   }
+`;
+
+export const Error = styled.span`
+  color: #c53030;
+  display: block;
+  margin-top: 8px;
 `;
 
 export const Repositories = styled.div`

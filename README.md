@@ -1,6 +1,6 @@
 <h1 align="center">
   <a href="https://github.com/csorlandi/nodejs-concepts">
-    <img alt="Logo ReactJS" src="./assets/logo.svg" width="500px" />
+    <img alt="Logo Repository" src="./src/assets/logo.svg" width="500px" />
   </a>
 </h1>
 
@@ -30,7 +30,7 @@
 
  ## :tv: Preview
 
-![video](./assets/video.gif)
+![video](./src/assets/video.gif)
 
 
 <a id="technologies"></a><br>

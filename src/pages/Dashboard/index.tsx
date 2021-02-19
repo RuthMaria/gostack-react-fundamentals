@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { FiChevronRight } from 'react-icons/fi';
 import logoImg from '../../assets/logo.svg';
-import { Title, Form, Repositories } from './styles';
+import { Title, Form, Repositories, Error } from './styles';
 import api from '../../services/api';
 
 interface Repository {
@@ -15,7 +15,13 @@ interface Repository {
 
 const Dashboard: React.FC = () => {
   const [newRepository, setNewRepository] = useState('');
+  const [inputError, setInputError] = useState('');
   const [repositories, setRepositories] = useState<Repository[]>([]);
+
+  function reset(): void {
+    setNewRepository('');
+    setInputError('');
+  }
 
   // FormEvent é para não ter o reload na págna
   async function handleAddRepository(
@@ -23,12 +29,21 @@ const Dashboard: React.FC = () => {
   ): Promise<void> {
     event.preventDefault();
 
-    const response = await api.get<Repository>(`repos/${newRepository}`);
+    if (!newRepository) {
+      setInputError('Digite o autor/nome_do_repositório');
+      return;
+    }
 
-    const repository = response.data;
+    try {
+      const response = await api.get<Repository>(`repos/${newRepository}`);
 
-    setRepositories([...repositories, repository]);
-    setNewRepository('');
+      const repository = response.data;
+
+      setRepositories([...repositories, repository]);
+      reset();
+    } catch (err) {
+      setInputError('Erro na busca por esse respositório');
+    }
   }
 
   return (
@@ -36,7 +51,7 @@ const Dashboard: React.FC = () => {
       <img src={logoImg} alt="Github Explorer" />
       <Title>Explore repositórios no GitHub</Title>
 
-      <Form onSubmit={handleAddRepository}>
+      <Form hasError={!!inputError} onSubmit={handleAddRepository}>
         <input
           placeholder="Digite o nome do repositório"
           value={newRepository}
@@ -44,6 +59,8 @@ const Dashboard: React.FC = () => {
         />
         <button type="submit">Pesquisar</button>
       </Form>
+
+      {inputError && <Error>{inputError}</Error>}
 
       <Repositories>
         {repositories.map(repository => (
