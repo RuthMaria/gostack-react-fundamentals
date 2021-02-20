@@ -24,7 +24,7 @@
 
 ## :books: About
 
- It is an application that allows you to search GitHub repositories.
+It is an application that allows you to search GitHub repositories. Where you can to see the details of this repository, such as: name, description, stars, forks and issues. The repositories are saved in the localStorage.
 
 <a id="execution"></a><br>
 
