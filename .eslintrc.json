@@ -29,6 +29,8 @@
         "@typescript-eslint/camelcase": "off",
         "react-hooks/exhaustive-deps": "warn",
         "camelcase": "off",
+        "react/jsx-one-expression-per-line": "off",
+        "import/prefer-default-export": "off",
         "react/jsx-filename-extension": [
           1,
           {
