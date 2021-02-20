@@ -35,6 +35,7 @@ export const Form = styled.form<FormPropos>`
       css`
         border-color: #c53030;
       `}
+
     // o '&' referencia o próprio elemento, equivale ao input::placeholder
     &::placeholder {
       color: #a8a8b3;
