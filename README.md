@@ -38,6 +38,7 @@ It is an application that allows you to search GitHub repositories. Where you ca
 ## ⚒️ Technologies Used
   * React.js
   * TypeScript
+  * Styled components
   * Axios
 
 

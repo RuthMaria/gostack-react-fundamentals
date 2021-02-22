@@ -17,6 +17,7 @@ interface Repository {
 const Dashboard: React.FC = () => {
   const [newRepository, setNewRepository] = useState('');
   const [inputError, setInputError] = useState('');
+
   // sempre que for um array ou um objeto tem que tipar
   const [repositories, setRepositories] = useState<Repository[]>(() => {
     const storagedRepositories = localStorage.getItem(
